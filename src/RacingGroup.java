@@ -24,8 +24,9 @@ public class RacingGroup implements RacingGroupInterface{
 	// and name color
 	public RacingGroup(Color background) {
 		racingSmileys = new ArrayList<RacingSmiley>();
-		int smileyLength = (426/NUMBER_OF_SMILEYS)-5;
-		int shiftCenter = (213/NUMBER_OF_SMILEYS);
+		int smileyBuffer = (400/NUMBER_OF_SMILEYS);
+		int smileyLength = smileyBuffer-4;
+		int shiftCenter = (200/NUMBER_OF_SMILEYS);
 		int shiftFacePart = shiftCenter/3;
 		AnimatedSmiley smileyToCopy = new AnimatedSmiley(1,0);
 		smileyToCopy.getFace().setAttributes(Color.YELLOW, shiftCenter, shiftCenter, smileyLength, smileyLength);
@@ -37,7 +38,7 @@ public class RacingGroup implements RacingGroupInterface{
 		for (int i=0; i<NUMBER_OF_SMILEYS; i++) {
 			if (i!=0) {
 				smileyToAdd = new RacingSmiley(smileyToAdd, smileyNames.get(i), nameColors.get(i));
-				smileyToAdd.translate(0, smileyLength);
+				smileyToAdd.translate(0, smileyBuffer);
 			}
 			racingSmileys.add(smileyToAdd);
 		}
