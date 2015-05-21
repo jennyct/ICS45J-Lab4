@@ -13,6 +13,12 @@ public class RacingSmileyAnimation implements RacingAnimationInterface {
 	private String statisticsTitle;
 	
 	private ArrayList<RacingSmiley> racers;
+	private RacingDisplay display;
+	
+	public RacingSmileyAnimation(RacingGroup g, RacingDisplay d) {
+		display = d;
+		
+	}
 	
 	@Override
 	public void animate() {
