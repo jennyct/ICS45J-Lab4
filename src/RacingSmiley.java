@@ -14,9 +14,9 @@ public class RacingSmiley extends AnimatedSmiley implements RacingSmileyInterfac
 	
 	private int ticks;
 	private int pixelsPerTick;
+	public static final long TOTAL_LAPS = 4;
 	
 	private Random generator;
-	
 	
 	public RacingSmiley(AnimatedSmiley orig, String name, Color nameColor) {
 		super(orig);
@@ -27,8 +27,6 @@ public class RacingSmiley extends AnimatedSmiley implements RacingSmileyInterfac
 		currentLap = 0;
 		currentDirection = 1;
 		ticks = 0;
-		
-		
 	}
 	
 	public RacingSmiley(RacingSmiley orig, String newName, Color newColor) {
@@ -45,7 +43,7 @@ public class RacingSmiley extends AnimatedSmiley implements RacingSmileyInterfac
 
 	@Override
 	public boolean finishedRace() {
-		return (currentLap == 5) ? true : false;
+		return (currentLap == TOTAL_LAPS) ? true : false;
 	}
 
 	@Override
@@ -73,5 +71,4 @@ public class RacingSmiley extends AnimatedSmiley implements RacingSmileyInterfac
 	public int getLapsCompleted() {
 		return currentLap;
 	}
-
 }
