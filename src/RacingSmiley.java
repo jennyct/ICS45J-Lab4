@@ -70,5 +70,9 @@ public class RacingSmiley extends AnimatedSmiley implements RacingSmileyInterfac
 	@Override
 	public int getLapsCompleted() {
 		return currentLap;
+	} 
+	
+	public int getCurrentDirection() {
+		return currentDirection;
 	}
 }
