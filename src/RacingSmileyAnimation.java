@@ -2,7 +2,6 @@ import java.util.ArrayList;
 
 
 public class RacingSmileyAnimation implements RacingAnimationInterface {
-
 	
 	private static final int REVERSE_DIRECTION = -1;
 	
@@ -21,7 +20,6 @@ public class RacingSmileyAnimation implements RacingAnimationInterface {
 	public RacingSmileyAnimation(RacingGroup g, RacingDisplay d) {
 		racers = g.getRacers();
 		display = d;
-		
 		display.repaint();
 	}
 	
@@ -32,12 +30,30 @@ public class RacingSmileyAnimation implements RacingAnimationInterface {
 			public void run()
 			{
 				do {
+					for (RacingSmiley racer : racers) {
+						if (!racer.finishedRace()) {
+							racer.raceForOneTick();
+						}
+					}
+					display.repaint();
+					pause(100);
 				}
 				while (isRaceDone(racers));
 			}
 		}
 		Thread t = new Thread(new AnimationRunnable());
 		t.start();
+	}
+	
+	private void pause(int millisecs)
+	{
+		try
+		{
+			Thread.sleep(millisecs);
+		}
+		catch (InterruptedException e)
+		{
+		}
 	}
 	
 	private boolean isRaceDone(ArrayList<RacingSmiley> racers) {
