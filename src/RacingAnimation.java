@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 
-public class RacingSmileyAnimation implements RacingAnimationInterface {
+public class RacingAnimation implements RacingAnimationInterface {
 	
 	private static final int REVERSE_DIRECTION = -1;
 	
@@ -17,7 +17,7 @@ public class RacingSmileyAnimation implements RacingAnimationInterface {
 	private ArrayList<RacingSmiley> racers;
 	private RacingDisplay display;
 	
-	public RacingSmileyAnimation(RacingGroup g, RacingDisplay d) {
+	public RacingAnimation(RacingGroup g, RacingDisplay d) {
 		racers = g.getRacers();
 		display = d;
 		display.repaint();
