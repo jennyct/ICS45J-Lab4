@@ -49,6 +49,7 @@ public class RacingSmiley extends AnimatedSmiley implements RacingSmileyInterfac
 	@Override
 	public void raceForOneTick() {
 		moveIt();
+		ticks++;
 	}
 
 	@Override
