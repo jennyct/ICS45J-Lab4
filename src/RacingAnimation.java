@@ -38,7 +38,7 @@ public class RacingAnimation implements RacingAnimationInterface {
 					display.repaint();
 					pause(100);
 				}
-				while (isRaceDone(racers));
+				while (!isRaceDone(racers));
 			}
 		}
 		Thread t = new Thread(new AnimationRunnable());
