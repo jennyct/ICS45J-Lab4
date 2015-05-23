@@ -99,5 +99,21 @@ public class RacingAnimation implements RacingAnimationInterface {
 	public String getSlowestSmileyName() {
 		return slowestSmileyName;
 	}
+	
+	private boolean hitLeftWall(RacingSmiley cntSmiley) {
+		if (cntSmiley.getLeftEdge() <= display.LEFT_EDGE && 
+			cntSmiley.getCurrentDirection() == -1) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean hitRightWall(RacingSmiley cntSmiley) {
+		if (cntSmiley.getRightEdge() >= display.RIGHT_EDGE && 
+			cntSmiley.getCurrentDirection() == 1) {
+			return true;
+		}
+		return false;
+	}
 
 }
