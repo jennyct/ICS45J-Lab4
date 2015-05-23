@@ -3,6 +3,9 @@ import java.util.ArrayList;
 
 public class RacingSmileyAnimation implements RacingAnimationInterface {
 
+	
+	private static final int REVERSE_DIRECTION = -1;
+	
 	private String fastestSmileyName;
 	private String slowestSmileyName;
 	
@@ -16,14 +19,34 @@ public class RacingSmileyAnimation implements RacingAnimationInterface {
 	private RacingDisplay display;
 	
 	public RacingSmileyAnimation(RacingGroup g, RacingDisplay d) {
+		racers = g.getRacers();
 		display = d;
 		
+		display.repaint();
 	}
 	
 	@Override
 	public void animate() {
-		// TODO Auto-generated method stub
-		
+		class AnimationRunnable implements Runnable
+		{
+			public void run()
+			{
+				do {
+				}
+				while (isRaceDone(racers));
+			}
+		}
+		Thread t = new Thread(new AnimationRunnable());
+		t.start();
+	}
+	
+	private boolean isRaceDone(ArrayList<RacingSmiley> racers) {
+		for (RacingSmiley racer : racers) {
+			if (!racer.finishedRace()) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	@Override
