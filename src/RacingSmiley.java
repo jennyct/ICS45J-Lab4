@@ -48,6 +48,27 @@ public class RacingSmiley extends AnimatedSmiley implements RacingSmileyInterfac
 		getSmile().translate((int)((currentDirection == 1) ? -getFace().getXLength() : getFace().getXLength()), 0);
 	}
 	
+	private boolean hitLeftWall() {
+		if (getLeftEdge() <= RacingDisplay.LEFT_EDGE && 
+			getCurrentDirection() == -1) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean hitRightWall() {
+		if (getRightEdge() >= RacingDisplay.RIGHT_EDGE && 
+			getCurrentDirection() == 1) {
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean hitWall() {
+		return (hitLeftWall() || hitRightWall()) ? true : false;
+	}
+
+	
 	@Override
 	public boolean finishedRace() {
 		return (currentLap == TOTAL_LAPS) ? true : false;
