@@ -40,7 +40,14 @@ public class RacingSmiley extends AnimatedSmiley implements RacingSmileyInterfac
 		currentDirection = 1;
 		ticks = 0;
 	}
-
+	
+	private void changeSmileyProfile() {
+		Color tempEyeColor = getLeftEye().getColor();
+		getLeftEye().setColor(getRightEye().getColor());
+		getRightEye().setColor(tempEyeColor);
+		getSmile().translate((int)((currentDirection == 1) ? -getFace().getXLength() : getFace().getXLength()), 0);
+	}
+	
 	@Override
 	public boolean finishedRace() {
 		return (currentLap == TOTAL_LAPS) ? true : false;
