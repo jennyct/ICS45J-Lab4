@@ -40,7 +40,7 @@ public class RacingAnimation implements RacingAnimationInterface {
 	 */
 	@Override
 	public void animate() {
-		do {
+		while (!isRaceDone(racers)) {
 			for (RacingSmiley racer : racers) {
 				if (!racer.finishedRace()) {
 					moveCntSmiley(racer);
@@ -49,7 +49,6 @@ public class RacingAnimation implements RacingAnimationInterface {
 			display.repaint();
 			pause(100);
 		}
-		while (!isRaceDone(racers));
 		computeStatistics();
 	}
 	
@@ -70,6 +69,8 @@ public class RacingAnimation implements RacingAnimationInterface {
 	 * @return true if race is done, false otherwise
 	 */
 	private boolean isRaceDone(ArrayList<RacingSmiley> racers) {
+		if (racers == null)
+			return true;
 		for (RacingSmiley racer : racers) {
 			if (!racer.finishedRace()) {
 				return false;
@@ -82,7 +83,7 @@ public class RacingAnimation implements RacingAnimationInterface {
 	 * Compute the necessary statistics to display
 	 */
 	private void computeStatistics() {
-		if (racers.size() == 0) {
+		if (racers == null) {
 			statisticsTitle = "No smileys to race!";
 		}
 		else {
