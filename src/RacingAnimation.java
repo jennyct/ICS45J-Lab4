@@ -40,25 +40,17 @@ public class RacingAnimation implements RacingAnimationInterface {
 	 */
 	@Override
 	public void animate() {
-		class AnimationRunnable implements Runnable
-		{
-			public void run()
-			{
-				do {
-					for (RacingSmiley racer : racers) {
-						if (!racer.finishedRace()) {
-							moveCntSmiley(racer);
-						}
-					}
-					display.repaint();
-					pause(100);
+		do {
+			for (RacingSmiley racer : racers) {
+				if (!racer.finishedRace()) {
+					moveCntSmiley(racer);
 				}
-				while (!isRaceDone(racers));
-				computeStatistics();
 			}
+			display.repaint();
+			pause(100);
 		}
-		Thread t = new Thread(new AnimationRunnable());
-		t.start();
+		while (!isRaceDone(racers));
+		computeStatistics();
 	}
 	
 	private void pause(int millisecs)
