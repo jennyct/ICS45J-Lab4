@@ -104,6 +104,7 @@ public class RacingAnimation implements RacingAnimationInterface {
 		if (hitLeftWall(racer) || hitRightWall(racer)) {
 			System.out.println("HIT SOME SHIT");
 			adjustDirection(racer);
+			racer.changeSmileyProfile();
 		}
 		else {
 			racer.raceForOneTick();
@@ -111,15 +112,13 @@ public class RacingAnimation implements RacingAnimationInterface {
 	}
 	
 	private void adjustDirection(RacingSmiley racer) {
-		if (hitLeftWall(racer)) {
-			System.out.println("lap");
-		}
 		System.out.println(racer.getCurrentXMovement() * REVERSE_DIRECTION);
 		racer.setCurrentXMovement(racer.getCurrentXMovement() * REVERSE_DIRECTION);
+		racer.setCurrentDirection(racer.getCurrentDirection() * REVERSE_DIRECTION);
 	}
 	
 	private boolean hitLeftWall(RacingSmiley cntSmiley) {
-		if (cntSmiley.getLeftEdge() <= display.LEFT_EDGE && 
+		if (cntSmiley.getLeftEdge() <= RacingDisplay.LEFT_EDGE && 
 			cntSmiley.getCurrentDirection() == -1) {
 			return true;
 		}
@@ -127,7 +126,7 @@ public class RacingAnimation implements RacingAnimationInterface {
 	}
 
 	private boolean hitRightWall(RacingSmiley cntSmiley) {
-		if (cntSmiley.getRightEdge() >= display.RIGHT_EDGE && 
+		if (cntSmiley.getRightEdge() >= RacingDisplay.RIGHT_EDGE && 
 			cntSmiley.getCurrentDirection() == 1) {
 			return true;
 		}

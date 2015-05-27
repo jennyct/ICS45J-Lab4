@@ -12,11 +12,14 @@ public class RacingSmiley extends AnimatedSmiley implements RacingSmileyInterfac
 	private int currentLap;
 	private int currentDirection;
 	
-	private int ticks;
-	private int pixelsPerTick;
-	public static final long TOTAL_LAPS = 4;
-	
 	private Random generator;
+	private int ticks;
+	private int speedPerTick;
+	private int maxSpeed;
+	private int speedAdjustment;
+
+	public static final int TOTAL_LAPS = 4;
+	public static final int MAX_MOVEMENT = 10;
 	
 	public RacingSmiley(AnimatedSmiley orig, String name, Color nameColor) {
 		super(orig);
@@ -27,6 +30,7 @@ public class RacingSmiley extends AnimatedSmiley implements RacingSmileyInterfac
 		currentLap = 0;
 		currentDirection = 1;
 		ticks = 0;
+		
 	}
 	
 	public RacingSmiley(RacingSmiley orig, String newName, Color newColor) {
@@ -39,35 +43,23 @@ public class RacingSmiley extends AnimatedSmiley implements RacingSmileyInterfac
 		currentLap = 0;
 		currentDirection = 1;
 		ticks = 0;
+
 	}
 	
-	private void changeSmileyProfile() {
+	public void changeSmileyProfile() {
+		changeEye();
+		changeSmile();
+	}
+
+	private void changeEye() {
 		Color tempEyeColor = getLeftEye().getColor();
 		getLeftEye().setColor(getRightEye().getColor());
 		getRightEye().setColor(tempEyeColor);
-		getSmile().translate((int)((currentDirection == 1) ? -getFace().getXLength() : getFace().getXLength()), 0);
 	}
 	
-	private boolean hitLeftWall() {
-		if (getLeftEdge() <= RacingDisplay.LEFT_EDGE && 
-			getCurrentDirection() == -1) {
-			return true;
-		}
-		return false;
+	private void changeSmile() {
+		getSmile().translate((int)((currentDirection == 1) ? getFace().getXLength() : -getFace().getXLength()), 0);
 	}
-
-	private boolean hitRightWall() {
-		if (getRightEdge() >= RacingDisplay.RIGHT_EDGE && 
-			getCurrentDirection() == 1) {
-			return true;
-		}
-		return false;
-	}
-	
-	private boolean hitWall() {
-		return (hitLeftWall() || hitRightWall()) ? true : false;
-	}
-
 	
 	@Override
 	public boolean finishedRace() {
@@ -102,5 +94,9 @@ public class RacingSmiley extends AnimatedSmiley implements RacingSmileyInterfac
 	
 	public int getCurrentDirection() {
 		return currentDirection;
+	}
+	
+	public void setCurrentDirection(int direction) {
+		currentDirection = direction;
 	}
 }
