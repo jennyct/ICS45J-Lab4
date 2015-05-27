@@ -10,9 +10,9 @@ public class RacingAnimation implements RacingAnimationInterface {
 	
 	private int fewestTicks;
 	private int mostTicks;
-	private int averageTicks;
+	private double averageTicks;
 	
-	private String statisticsTitle;
+	private static final String statisticsTitle = "Race Statistics";
 	
 	private ArrayList<RacingSmiley> racers;
 	private RacingDisplay display;
@@ -39,6 +39,7 @@ public class RacingAnimation implements RacingAnimationInterface {
 					pause(100);
 				}
 				while (!isRaceDone(racers));
+				computeStatistics();
 			}
 		}
 		Thread t = new Thread(new AnimationRunnable());
@@ -64,6 +65,19 @@ public class RacingAnimation implements RacingAnimationInterface {
 		}
 		return true;
 	}
+	
+	private void computeStatistics() {
+		computeAverageTicks();
+	}
+	
+	private void computeAverageTicks() {
+		double sumOfTicks = 0;
+		for (RacingSmiley racer: racers) {
+			sumOfTicks += racer.getTicks();
+		}
+		averageTicks = sumOfTicks/(double)racers.size();
+	}
+
 
 	@Override
 	public ArrayList<RacingSmiley> getRacers() {
@@ -102,9 +116,10 @@ public class RacingAnimation implements RacingAnimationInterface {
 	
 	private void moveCntSmiley(RacingSmiley racer) {
 		if (hitLeftWall(racer) || hitRightWall(racer)) {
-			System.out.println("HIT SOME SHIT");
 			adjustDirection(racer);
+			adjustSpeed(racer);
 			racer.changeSmileyProfile();
+			racer.incrementLap();
 		}
 		else {
 			racer.raceForOneTick();
@@ -117,8 +132,53 @@ public class RacingAnimation implements RacingAnimationInterface {
 		racer.setCurrentDirection(racer.getCurrentDirection() * REVERSE_DIRECTION);
 	}
 	
+	private void adjustSpeed(RacingSmiley racer) {
+		switch(racer.getStrategy()) {
+		case 0:
+			break;
+		case 1:
+			if (racer.getCurrentXMovement() > 1) {
+				if ((racer.getCurrentXMovement() - racer.getSpeedAdjustment()) < 1) {
+					racer.setCurrentXMovement(1);
+				}
+				else {
+					racer.setCurrentXMovement(racer.getCurrentXMovement() - racer.getSpeedAdjustment());
+				}
+			}
+			else if (racer.getCurrentXMovement() < -1) {
+				if ((racer.getCurrentXMovement() + racer.getSpeedAdjustment()) > -1) {
+					racer.setCurrentXMovement(-1);
+				}
+				else {
+					racer.setCurrentXMovement(racer.getCurrentXMovement() + racer.getSpeedAdjustment());
+				}
+			}
+			break;
+		case 2:
+			if (racer.getCurrentDirection() > racer.getBaseSpeed() * -2 && racer.getCurrentDirection() == -1) {
+				if ((racer.getCurrentXMovement() - racer.getSpeedAdjustment()) < racer.getBaseSpeed() * -2) {
+					racer.setCurrentXMovement(racer.getBaseSpeed() * -2);
+				}
+				else {
+					racer.setCurrentXMovement(racer.getCurrentXMovement() - racer.getSpeedAdjustment());
+				}
+			}
+			else if (racer.getCurrentDirection() < racer.getBaseSpeed() * 2 && racer.getCurrentDirection() == 1) {
+				if ((racer.getCurrentXMovement() + racer.getSpeedAdjustment()) > racer.getBaseSpeed() * 2) {
+					racer.setCurrentXMovement(racer.getBaseSpeed() * 2);
+				}
+				else {
+					racer.setCurrentXMovement(racer.getCurrentXMovement() + racer.getSpeedAdjustment());
+				}
+			}
+			break;
+		default:
+			break;
+		}
+	}
+	
 	private boolean hitLeftWall(RacingSmiley cntSmiley) {
-		if (cntSmiley.getLeftEdge() <= RacingDisplay.LEFT_EDGE && 
+		if (cntSmiley.getLeftEdge() <= RacingDisplay.LEFT_EDGE+5 && 
 			cntSmiley.getCurrentDirection() == -1) {
 			return true;
 		}
@@ -126,7 +186,7 @@ public class RacingAnimation implements RacingAnimationInterface {
 	}
 
 	private boolean hitRightWall(RacingSmiley cntSmiley) {
-		if (cntSmiley.getRightEdge() >= RacingDisplay.RIGHT_EDGE && 
+		if (cntSmiley.getRightEdge() >= RacingDisplay.RIGHT_EDGE-5 && 
 			cntSmiley.getCurrentDirection() == 1) {
 			return true;
 		}
