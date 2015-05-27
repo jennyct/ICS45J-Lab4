@@ -1,0 +1,16 @@
+Lab 4: Smileys at the Races
+
+Team members: Jenny Tang and Stephen Em
+
+Description of the Program: The program has smiley racers that are derived from the Animated Smileys from
+Lab 2 and 3. These smileys are modified so it shows the smiley's profile as they're racing and
+the profile is flipped when a wall is it. Each smiley has its own speed chosen when constructed and each
+also has its own strategy when constructed. A strategy will either be that it continuously slows down,
+speeds up, or stays the same speed during the race. At the end, statistics will show for the average ticks,
+the fastest smiley (the one who took the least amount of ticks), and the slowest smiley (The one who took
+the most amount of ticks).
+
+Contributions: Both of us pair programmed on the whole project and took turns, switching every 20 minutes.
+
+
+"Jenny Tang 45502833 and Stephen Em 33819914 read this text file and agree with its content."
