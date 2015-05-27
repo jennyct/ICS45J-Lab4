@@ -28,7 +28,7 @@ public class RacingGroup implements RacingGroupInterface{
 		int smileyLength = smileyBuffer-4;
 		int shiftCenter = (200/NUMBER_OF_SMILEYS);
 		int shiftFacePart = shiftCenter/3;
-		AnimatedSmiley smileyToCopy = new AnimatedSmiley(1,0);
+		AnimatedSmiley smileyToCopy = new AnimatedSmiley(10,0);
 		smileyToCopy.getFace().setAttributes(Color.YELLOW, shiftCenter, shiftCenter, smileyLength, smileyLength);
 		smileyToCopy.getLeftEye().setAttributes(Color.YELLOW, shiftCenter-shiftFacePart, shiftCenter-shiftFacePart, smileyLength/10, smileyLength/10);
 		smileyToCopy.getRightEye().setAttributes(Color.RED, shiftCenter+shiftFacePart, shiftCenter-shiftFacePart, smileyLength/10, smileyLength/10);

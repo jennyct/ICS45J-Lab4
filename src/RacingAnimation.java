@@ -32,7 +32,7 @@ public class RacingAnimation implements RacingAnimationInterface {
 				do {
 					for (RacingSmiley racer : racers) {
 						if (!racer.finishedRace()) {
-							racer.raceForOneTick();
+							moveCntSmiley(racer);
 						}
 					}
 					display.repaint();
@@ -98,6 +98,24 @@ public class RacingAnimation implements RacingAnimationInterface {
 	@Override
 	public String getSlowestSmileyName() {
 		return slowestSmileyName;
+	}
+	
+	private void moveCntSmiley(RacingSmiley racer) {
+		if (hitLeftWall(racer) || hitRightWall(racer)) {
+			System.out.println("HIT SOME SHIT");
+			adjustDirection(racer);
+		}
+		else {
+			racer.raceForOneTick();
+		}
+	}
+	
+	private void adjustDirection(RacingSmiley racer) {
+		if (hitLeftWall(racer)) {
+			System.out.println("lap");
+		}
+		System.out.println(racer.getCurrentXMovement() * REVERSE_DIRECTION);
+		racer.setCurrentXMovement(racer.getCurrentXMovement() * REVERSE_DIRECTION);
 	}
 	
 	private boolean hitLeftWall(RacingSmiley cntSmiley) {
