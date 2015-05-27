@@ -57,6 +57,11 @@ public class RacingAnimation implements RacingAnimationInterface {
 		}
 	}
 	
+	/**
+	 * Determine if race is done
+	 * @param racers - RacingSmiley ArrayList
+	 * @return true if race is done, false otherwise
+	 */
 	private boolean isRaceDone(ArrayList<RacingSmiley> racers) {
 		for (RacingSmiley racer : racers) {
 			if (!racer.finishedRace()) {
@@ -66,12 +71,18 @@ public class RacingAnimation implements RacingAnimationInterface {
 		return true;
 	}
 	
+	/**
+	 * Compute the necessary statistics to display
+	 */
 	private void computeStatistics() {
 		computeAverageTicks();
 		computeFewestTicks();
 		computeMostTicks();
 	}
 	
+	/**
+	 * Compute the average ticks
+	 */
 	private void computeAverageTicks() {
 		double sumOfTicks = 0;
 		for (RacingSmiley racer: racers) {
@@ -80,6 +91,10 @@ public class RacingAnimation implements RacingAnimationInterface {
 		averageTicks = sumOfTicks/(double)racers.size();
 	}
 	
+	/**
+	 * Compute the fastest RacingSmiley and obtain
+	 * the amount of fewest ticks
+	 */
 	public void computeFewestTicks() {
 		int ticks = racers.get(0).getTicks();
 		String smiley = racers.get(0).getSmileyName();
@@ -93,6 +108,10 @@ public class RacingAnimation implements RacingAnimationInterface {
 		fewestTicks = ticks;
 	}
 	
+	/*
+	 * Compute the slowest RacingSmiley and obtain
+	 * the amount of most ticks
+	 */
 	public void computeMostTicks() {
 		int ticks = racers.get(0).getTicks();
 		String smiley = racers.get(0).getSmileyName();
@@ -142,6 +161,11 @@ public class RacingAnimation implements RacingAnimationInterface {
 		return slowestSmileyName;
 	}
 	
+	/**
+	 * Move RacingSmiley and perform actions if wall is hit:
+	 * Adjust direction, adjust speed, and increment lap
+	 * @param racer - a RacingSmiley
+	 */
 	private void moveCntSmiley(RacingSmiley racer) {
 		if (hitLeftWall(racer) || hitRightWall(racer)) {
 			adjustDirection(racer);
@@ -154,12 +178,22 @@ public class RacingAnimation implements RacingAnimationInterface {
 		}
 	}
 	
+	/**
+	 * Reverse direction of RacingSmiley
+	 * @param racer - a RacingSmiley
+	 */
 	private void adjustDirection(RacingSmiley racer) {
-		System.out.println(racer.getCurrentXMovement() * REVERSE_DIRECTION);
 		racer.setCurrentXMovement(racer.getCurrentXMovement() * REVERSE_DIRECTION);
 		racer.setCurrentDirection(racer.getCurrentDirection() * REVERSE_DIRECTION);
 	}
 	
+	/** Adjust speed of RacingSmiley according to strategy
+	 *  Racing Strategy:
+	 *  0 - constant speed
+	 *  1 - decrease speed according to RacingSmiley speed adjustment
+	 *  2 - increase speed according to RacingSmiley speed adjustment
+	 * @param racer - a RacingSmiley
+	 */
 	private void adjustSpeed(RacingSmiley racer) {
 		switch(racer.getStrategy()) {
 		case 0:
@@ -205,6 +239,11 @@ public class RacingAnimation implements RacingAnimationInterface {
 		}
 	}
 	
+	/** Detect if left wall was hit
+	 * 
+	 * @param cntSmiley - a RacingSmiley
+	 * @return true if cntSmiley hit left wall, else false
+	 */
 	private boolean hitLeftWall(RacingSmiley cntSmiley) {
 		if (cntSmiley.getLeftEdge() <= RacingDisplay.LEFT_EDGE+5 && 
 			cntSmiley.getCurrentDirection() == -1) {
@@ -213,6 +252,11 @@ public class RacingAnimation implements RacingAnimationInterface {
 		return false;
 	}
 
+	/** Detect if right wall was hit
+	 * 
+	 * @param cntSmiley - a RacingSmiley
+	 * @return true if cntSmiley hit right wall, else false
+	 */
 	private boolean hitRightWall(RacingSmiley cntSmiley) {
 		if (cntSmiley.getRightEdge() >= RacingDisplay.RIGHT_EDGE-5 && 
 			cntSmiley.getCurrentDirection() == 1) {
