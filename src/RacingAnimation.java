@@ -17,7 +17,7 @@ public class RacingAnimation implements RacingAnimationInterface {
 	private int mostTicks;
 	private double averageTicks;
 	
-	private static final String statisticsTitle = "Race Statistics";
+	private String statisticsTitle = "Race Statistics";
 	
 	private ArrayList<RacingSmiley> racers;
 	private RacingDisplay display;
@@ -82,9 +82,14 @@ public class RacingAnimation implements RacingAnimationInterface {
 	 * Compute the necessary statistics to display
 	 */
 	private void computeStatistics() {
-		computeAverageTicks();
-		computeFewestTicks();
-		computeMostTicks();
+		if (racers.size() == 0) {
+			statisticsTitle = "No smileys to race!";
+		}
+		else {
+			computeAverageTicks();
+			computeFewestTicks();
+			computeMostTicks();
+		}
 	}
 	
 	/**
@@ -103,33 +108,29 @@ public class RacingAnimation implements RacingAnimationInterface {
 	 * the amount of fewest ticks
 	 */
 	public void computeFewestTicks() {
-		int ticks = racers.get(0).getTicks();
-		String smiley = racers.get(0).getSmileyName();
+		fewestTicks = Integer.MAX_VALUE;
+		fastestSmileyName = "No smiley racers to race.";
 		for (RacingSmiley racer: racers) {
-			if (racer.getTicks() < ticks) {
-				ticks = racer.getTicks();
-				smiley = racer.getSmileyName();
+			if (racer.getTicks() < fewestTicks) {
+				fewestTicks = racer.getTicks();
+				fastestSmileyName = racer.getSmileyName();
 			}
 		}
-		fastestSmileyName = smiley;
-		fewestTicks = ticks;
 	}
 	
-	/*
+	/**
 	 * Compute the slowest RacingSmiley and obtain
 	 * the amount of most ticks
 	 */
 	public void computeMostTicks() {
-		int ticks = racers.get(0).getTicks();
-		String smiley = racers.get(0).getSmileyName();
+		slowestSmileyName = "No smiley racers to race.";
+		mostTicks = Integer.MIN_VALUE;
 		for (RacingSmiley racer: racers) {
-			if (racer.getTicks() > ticks) {
-				ticks = racer.getTicks();
-				smiley = racer.getSmileyName();
+			if (racer.getTicks() > mostTicks) {
+				mostTicks = racer.getTicks();
+				slowestSmileyName = racer.getSmileyName();
 			}
 		}
-		slowestSmileyName = smiley;
-		mostTicks = ticks;
 	}
 
 
