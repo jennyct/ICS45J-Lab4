@@ -68,6 +68,8 @@ public class RacingAnimation implements RacingAnimationInterface {
 	
 	private void computeStatistics() {
 		computeAverageTicks();
+		computeFewestTicks();
+		computeMostTicks();
 	}
 	
 	private void computeAverageTicks() {
@@ -76,6 +78,32 @@ public class RacingAnimation implements RacingAnimationInterface {
 			sumOfTicks += racer.getTicks();
 		}
 		averageTicks = sumOfTicks/(double)racers.size();
+	}
+	
+	public void computeFewestTicks() {
+		int ticks = racers.get(0).getTicks();
+		String smiley = racers.get(0).getSmileyName();
+		for (RacingSmiley racer: racers) {
+			if (racer.getTicks() < ticks) {
+				ticks = racer.getTicks();
+				smiley = racer.getSmileyName();
+			}
+		}
+		fastestSmileyName = smiley;
+		fewestTicks = ticks;
+	}
+	
+	public void computeMostTicks() {
+		int ticks = racers.get(0).getTicks();
+		String smiley = racers.get(0).getSmileyName();
+		for (RacingSmiley racer: racers) {
+			if (racer.getTicks() > ticks) {
+				ticks = racer.getTicks();
+				smiley = racer.getSmileyName();
+			}
+		}
+		slowestSmileyName = smiley;
+		mostTicks = ticks;
 	}
 
 
