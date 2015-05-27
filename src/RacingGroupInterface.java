@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 interface RacingGroupInterface
 {
-	
 	public ArrayList<RacingSmiley> getRacers();
 	
 }

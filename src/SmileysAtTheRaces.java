@@ -11,7 +11,6 @@ public class SmileysAtTheRaces
 	
 	public static void main(String[] args)
 	{
-		// Just build the frame; it controls all else
 		new RacingFrame("Smileys at the Races");
 	}
 	
