@@ -37,7 +37,7 @@ public class RacingGroup implements RacingGroupInterface{
 	 * Number of smileys generated for the race
 	 * Change this number to increase amount of smileys
 	 */
-	private static final int NUMBER_OF_SMILEYS = 5;
+	private static final int NUMBER_OF_SMILEYS = 0;
 	private ArrayList<RacingSmiley> racingSmileys;
 	
 	/** The constructor builds an ArrayList of racers
@@ -51,24 +51,26 @@ public class RacingGroup implements RacingGroupInterface{
 	 */
 
 	public RacingGroup(Color background) {
-		racingSmileys = new ArrayList<RacingSmiley>();
-		int smileyBuffer = (400/NUMBER_OF_SMILEYS);
-		int smileyLength = smileyBuffer-4;
-		int shiftCenter = (200/NUMBER_OF_SMILEYS);
-		int shiftFacePart = shiftCenter/3;
-		AnimatedSmiley smileyToCopy = new AnimatedSmiley(10,0);
-		smileyToCopy.getFace().setAttributes(Color.YELLOW, shiftCenter, shiftCenter, smileyLength, smileyLength);
-		smileyToCopy.getLeftEye().setAttributes(Color.YELLOW, shiftCenter-shiftFacePart, shiftCenter-shiftFacePart, smileyLength/10, smileyLength/10);
-		smileyToCopy.getRightEye().setAttributes(Color.RED, shiftCenter+shiftFacePart, shiftCenter-shiftFacePart, smileyLength/10, smileyLength/10);
-		smileyToCopy.getSmile().setAttributes(background, smileyLength, shiftCenter+shiftFacePart, smileyLength, smileyLength/10);
-		
-		RacingSmiley smileyToAdd = new RacingSmiley(smileyToCopy, smileyNames.get(0), nameColors.get(0));
-		for (int i=0; i<NUMBER_OF_SMILEYS; i++) {
-			if (i!=0) {
-				smileyToAdd = new RacingSmiley(smileyToAdd, smileyNames.get(i), nameColors.get(i));
-				smileyToAdd.translate(0, smileyBuffer);
+		if (NUMBER_OF_SMILEYS > 0) {
+			racingSmileys = new ArrayList<RacingSmiley>();
+			int smileyBuffer = (400/NUMBER_OF_SMILEYS);
+			int smileyLength = smileyBuffer-4;
+			int shiftCenter = (200/NUMBER_OF_SMILEYS);
+			int shiftFacePart = shiftCenter/3;
+			AnimatedSmiley smileyToCopy = new AnimatedSmiley(10,0);
+			smileyToCopy.getFace().setAttributes(Color.YELLOW, shiftCenter, shiftCenter, smileyLength, smileyLength);
+			smileyToCopy.getLeftEye().setAttributes(Color.YELLOW, shiftCenter-shiftFacePart, shiftCenter-shiftFacePart, smileyLength/10, smileyLength/10);
+			smileyToCopy.getRightEye().setAttributes(Color.RED, shiftCenter+shiftFacePart, shiftCenter-shiftFacePart, smileyLength/10, smileyLength/10);
+			smileyToCopy.getSmile().setAttributes(background, smileyLength, shiftCenter+shiftFacePart, smileyLength, smileyLength/10);
+			
+			RacingSmiley smileyToAdd = new RacingSmiley(smileyToCopy, smileyNames.get(0), nameColors.get(0));
+			for (int i=0; i<NUMBER_OF_SMILEYS; i++) {
+				if (i!=0) {
+					smileyToAdd = new RacingSmiley(smileyToAdd, smileyNames.get(i), nameColors.get(i));
+					smileyToAdd.translate(0, smileyBuffer);
+				}
+				racingSmileys.add(smileyToAdd);
 			}
-			racingSmileys.add(smileyToAdd);
 		}
 	}
 	
