@@ -12,53 +12,48 @@ public class RacingSmiley extends AnimatedSmiley implements RacingSmileyInterfac
 	private int currentLap;
 	private int currentDirection;
 	
-	private Random generator;
+	private static Random generator = new Random();
 	private int ticks;
-	private int speedPerTick;
-	private int maxSpeed;
+	private int strategy;
+	private int baseSpeed;
 	private int speedAdjustment;
 
-	public static final int TOTAL_LAPS = 4;
+	public static final int TOTAL_LAPS = 10;
 	public static final int MAX_MOVEMENT = 10;
 	
+	
 	public RacingSmiley(AnimatedSmiley orig, String name, Color nameColor) {
-		super(orig);
+		super(orig,generator.nextInt(MAX_MOVEMENT)+1,0);
 		
 		smileyName = name;
 		smileyNameColor = nameColor;
-		generator = new Random();
 		currentLap = 0;
 		currentDirection = 1;
 		ticks = 0;
-		
+		baseSpeed = getCurrentXMovement();
+		strategy = generateStrat();
+		speedAdjustment = generator.nextInt(baseSpeed)+3;
+		System.out.println(smileyName + " strategy is " + strategy);
 	}
 	
 	public RacingSmiley(RacingSmiley orig, String newName, Color newColor) {
 		
-		super(orig);
+		super(orig,generator.nextInt(MAX_MOVEMENT)+1,0);
 		
 		smileyName = newName;
 		smileyNameColor = newColor;
-		generator = new Random();
 		currentLap = 0;
 		currentDirection = 1;
 		ticks = 0;
-
+		baseSpeed = getCurrentXMovement();
+		strategy = generateStrat();
+		speedAdjustment = generator.nextInt(baseSpeed)+3;
+		System.out.println(smileyName + " strategy is " + strategy);
 	}
 	
 	public void changeSmileyProfile() {
 		changeEye();
 		changeSmile();
-	}
-
-	private void changeEye() {
-		Color tempEyeColor = getLeftEye().getColor();
-		getLeftEye().setColor(getRightEye().getColor());
-		getRightEye().setColor(tempEyeColor);
-	}
-	
-	private void changeSmile() {
-		getSmile().translate((int)((currentDirection == 1) ? getFace().getXLength() : -getFace().getXLength()), 0);
 	}
 	
 	@Override
@@ -98,5 +93,44 @@ public class RacingSmiley extends AnimatedSmiley implements RacingSmileyInterfac
 	
 	public void setCurrentDirection(int direction) {
 		currentDirection = direction;
+	}
+	
+	public void incrementLap() {
+		currentLap++;
+	}
+	
+	public int getStrategy() {
+		return strategy;
+	}
+	
+	public int getBaseSpeed() {
+		return baseSpeed;
+	}
+	
+	public int getSpeedAdjustment() {
+		return speedAdjustment;
+	}
+	
+	private void changeEye() {
+		Color tempEyeColor = getLeftEye().getColor();
+		getLeftEye().setColor(getRightEye().getColor());
+		getRightEye().setColor(tempEyeColor);
+	}
+	
+	private void changeSmile() {
+		getSmile().translate((int)((currentDirection == 1) ? getFace().getXLength() : -getFace().getXLength()), 0);
+	}
+	
+	private int generateStrat() {
+		switch(generator.nextInt(3)) {
+		case 0:
+			return 0;
+		case 1:
+			return 1;
+		case 2:
+			return 2;
+		default:
+			return -1;
+		}
 	}
 }
