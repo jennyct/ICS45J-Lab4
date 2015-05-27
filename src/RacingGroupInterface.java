@@ -8,20 +8,8 @@
 
 import java.util.ArrayList;
 
-// The group of smileys that are in the race
 interface RacingGroupInterface
 {
-	
-	// public RacingGroup(Color background)
-	
-	// The constructor builds an ArrayList of racers
-	// all racing smileys, each with the same shape and
-	// color, with mouths the same color as the background
-	// of the screen (the passed-in parameter), moving to
-	// the right to start, but each with a different name
-	// and name color
-	
-	// Access the group
 	
 	public ArrayList<RacingSmiley> getRacers();
 	
