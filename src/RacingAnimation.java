@@ -1,6 +1,11 @@
 import java.util.ArrayList;
 
-
+/**
+ * Represents a collection of racing smiley faces that race one another, 
+ * each completing a set number of laps
+ * @author Stephen Em and Jenny Tang
+ *
+ */
 public class RacingAnimation implements RacingAnimationInterface {
 	
 	private static final int REVERSE_DIRECTION = -1;
@@ -17,12 +22,22 @@ public class RacingAnimation implements RacingAnimationInterface {
 	private ArrayList<RacingSmiley> racers;
 	private RacingDisplay display;
 	
+	/** 
+	 * The constructor for the class which takes in RacingGroup
+	 * and RacingDisplay. Default class constructor.
+	 * @param g - RacingGroup of RacingSmileys to race
+	 * @param d - RacingDisplay to display
+	 */
 	public RacingAnimation(RacingGroup g, RacingDisplay d) {
 		racers = g.getRacers();
 		display = d;
 		display.repaint();
 	}
 	
+	/** 
+	 * Called once in RacerFrame to show the running race when GO! is pressed
+	 * Logic of how the race will be animated
+	 */
 	@Override
 	public void animate() {
 		class AnimationRunnable implements Runnable
